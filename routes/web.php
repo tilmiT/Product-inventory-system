@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,4 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
 });
 
+Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login.form');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('admin');
+
 require __DIR__.'/auth.php';
+
